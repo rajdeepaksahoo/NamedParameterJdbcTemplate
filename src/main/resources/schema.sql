@@ -1,12 +1,26 @@
-CREATE TABLE IF NOT EXISTS address (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    street VARCHAR(255),
-    city VARCHAR(255)
-);
+-- CREATE TABLE IF NOT EXISTS address (
+--     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     street VARCHAR(255),
+--     city VARCHAR(255)
+-- );
 
+-- CREATE TABLE IF NOT EXISTS employee (
+--     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     name VARCHAR(255) NOT NULL,
+--     address_id BIGINT,
+--     FOREIGN KEY (address_id) REFERENCES address(id)
+-- );
+CREATE TABLE IF NOT EXISTS address (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY, -- Unique ID for each address
+    street VARCHAR(255) NOT NULL,         -- Street name (cannot be NULL)
+    city VARCHAR(255) NOT NULL            -- City name (cannot be NULL)
+);
 CREATE TABLE IF NOT EXISTS employee (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    address_id BIGINT,
-    FOREIGN KEY (address_id) REFERENCES address(id)
+    id BIGINT AUTO_INCREMENT PRIMARY KEY, -- Unique ID for each employee
+    name VARCHAR(255) NOT NULL,           -- Employee name (cannot be NULL)
+    address_id BIGINT,                    -- Foreign key referencing `address`
+    FOREIGN KEY (address_id) 
+        REFERENCES address(id) 
+        ON DELETE SET NULL                -- Set to NULL if address is deleted
+        ON UPDATE CASCADE                 -- Update address_id if the `id` in `address` changes
 );
